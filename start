@@ -1,3 +1,14 @@
 pip3 install -q pytubefix
 pip3 install -q -U yt-dlp
+python3 -c "
+import os, base64
+# Write cookies.txt to /tmp for yt-dlp
+cookies = open('/app/cookies.txt').read() if os.path.exists('/app/cookies.txt') else ''
+if cookies:
+    with open('/tmp/yt_cookies.txt', 'w') as f:
+        f.write(cookies)
+    print('[Start] YouTube cookies loaded from /app/cookies.txt')
+else:
+    print('[Start] No cookies.txt found')
+"
 python3 -m ShrutiMusic

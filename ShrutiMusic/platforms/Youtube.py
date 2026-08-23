@@ -14,8 +14,9 @@ import aiohttp
 DOWNLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "downloads")
 DOWNLOAD_DIR = os.path.abspath(DOWNLOAD_DIR)
 
-COOKIES_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "cookies.txt")
-COOKIES_FILE = os.path.abspath(COOKIES_FILE) if os.path.exists(os.path.abspath(COOKIES_FILE)) else None
+COOKIES_FILE = "/tmp/yt_cookies.txt" if os.path.exists("/tmp/yt_cookies.txt") else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "cookies.txt")
+if not os.path.exists(COOKIES_FILE):
+    COOKIES_FILE = None
 
 
 def time_to_seconds(time):
@@ -97,7 +98,7 @@ async def download_video(link: str) -> str:
         return file_path
 
     ydl_opts = {
-        "format": "bestvideo[height<=1440]+bestaudio/best[height<=1440]/best",
+        "format": "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
         "outtmpl": os.path.join(DOWNLOAD_DIR, f"{video_id}.%(ext)s"),
         "merge_output_format": "mp4",
         "quiet": True,
