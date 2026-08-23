@@ -35,7 +35,7 @@ async def download_song(link: str) -> str:
     outtmpl = os.path.join(DOWNLOAD_DIR, f"{video_id}.%(ext)s")
 
     ydl_opts = {
-        "format": "bestaudio[ext=m4a]/bestaudio/best",
+        "format": "bestaudio/best",
         "outtmpl": outtmpl,
         "quiet": True,
         "no_warnings": True,
