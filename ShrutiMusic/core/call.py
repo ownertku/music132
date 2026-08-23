@@ -35,7 +35,7 @@ from pytgcalls.exceptions import (
 )
 from pytgcalls.types import Update
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
-from pytgcalls.types.input_stream.quality import HighQualityAudio, MediumQualityVideo
+from pytgcalls.types.input_stream.quality import HighQualityAudio, HighQualityVideo
 from pytgcalls.types.stream import StreamAudioEnded
 
 import config
@@ -214,7 +214,7 @@ class Call(PyTgCalls):
             AudioVideoPiped(
                 out,
                 audio_parameters=HighQualityAudio(),
-                video_parameters=MediumQualityVideo(),
+                video_parameters=HighQualityVideo(),
                 additional_ffmpeg_parameters=f"-ss {played} -to {duration}",
             )
             if playing[0]["streamtype"] == "video"
@@ -265,7 +265,7 @@ class Call(PyTgCalls):
             stream = AudioVideoPiped(
                 link,
                 audio_parameters=HighQualityAudio(),
-                video_parameters=MediumQualityVideo(),
+                video_parameters=HighQualityVideo(),
             )
         else:
             stream = AudioPiped(link, audio_parameters=HighQualityAudio())
@@ -280,7 +280,7 @@ class Call(PyTgCalls):
             AudioVideoPiped(
                 file_path,
                 audio_parameters=HighQualityAudio(),
-                video_parameters=MediumQualityVideo(),
+                video_parameters=HighQualityVideo(),
                 additional_ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
             )
             if mode == "video"
@@ -317,14 +317,14 @@ class Call(PyTgCalls):
             stream = AudioVideoPiped(
                 link,
                 audio_parameters=HighQualityAudio(),
-                video_parameters=MediumQualityVideo(),
+                video_parameters=HighQualityVideo(),
             )
         else:
             stream = (
                 AudioVideoPiped(
                     link,
                     audio_parameters=HighQualityAudio(),
-                    video_parameters=MediumQualityVideo(),
+                    video_parameters=HighQualityVideo(),
                 )
                 if video
                 else AudioPiped(link, audio_parameters=HighQualityAudio())
@@ -399,7 +399,7 @@ class Call(PyTgCalls):
                     stream = AudioVideoPiped(
                         link,
                         audio_parameters=HighQualityAudio(),
-                        video_parameters=MediumQualityVideo(),
+                        video_parameters=HighQualityVideo(),
                     )
                 else:
                     stream = AudioPiped(
@@ -445,7 +445,7 @@ class Call(PyTgCalls):
                     stream = AudioVideoPiped(
                         file_path,
                         audio_parameters=HighQualityAudio(),
-                        video_parameters=MediumQualityVideo(),
+                        video_parameters=HighQualityVideo(),
                     )
                 else:
                     stream = AudioPiped(
@@ -480,7 +480,7 @@ class Call(PyTgCalls):
                     AudioVideoPiped(
                         videoid,
                         audio_parameters=HighQualityAudio(),
-                        video_parameters=MediumQualityVideo(),
+                        video_parameters=HighQualityVideo(),
                     )
                     if str(streamtype) == "video"
                     else AudioPiped(videoid, audio_parameters=HighQualityAudio())
@@ -506,7 +506,7 @@ class Call(PyTgCalls):
                     stream = AudioVideoPiped(
                         queued,
                         audio_parameters=HighQualityAudio(),
-                        video_parameters=MediumQualityVideo(),
+                        video_parameters=HighQualityVideo(),
                     )
                 else:
                     stream = AudioPiped(
