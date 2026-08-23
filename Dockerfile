@@ -7,9 +7,14 @@ RUN curl -L https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-stati
     mv ffmpeg-*-static/ffprobe /usr/local/bin/ && \
     rm -rf ffmpeg*
 
-COPY . /app/
 WORKDIR /app/
 
+# Copy requirements first so Docker can cache pip install layer separately
+COPY requirements.txt /app/requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir pytubefix
+
+# Copy rest of the code
+COPY . /app/
 
 CMD ["bash", "start"]
