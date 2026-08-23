@@ -48,7 +48,7 @@ async def download_song(link: str) -> str:
         },
         "extractor_args": {
             "youtube": {
-                "player_client": ["web"],
+                "player_client": ["ios"],
             }
         },
     }
@@ -102,7 +102,7 @@ async def download_video(link: str) -> str:
         },
         "extractor_args": {
             "youtube": {
-                "player_client": ["web"],
+                "player_client": ["ios"],
             }
         },
     }
