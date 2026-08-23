@@ -39,6 +39,18 @@ async def download_song(link: str) -> str:
         "outtmpl": outtmpl,
         "quiet": True,
         "no_warnings": True,
+        "retries": 10,
+        "fragment_retries": 10,
+        "socket_timeout": 30,
+        "http_headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept-Language": "en-US,en;q=0.9",
+        },
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["web"],
+            }
+        },
     }
 
     def _download():
@@ -81,6 +93,18 @@ async def download_video(link: str) -> str:
         "merge_output_format": "mp4",
         "quiet": True,
         "no_warnings": True,
+        "retries": 10,
+        "fragment_retries": 10,
+        "socket_timeout": 30,
+        "http_headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept-Language": "en-US,en;q=0.9",
+        },
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["web"],
+            }
+        },
     }
 
     def _download():
