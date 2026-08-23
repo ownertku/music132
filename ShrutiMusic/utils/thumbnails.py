@@ -293,13 +293,17 @@ async def gen_thumb(videoid: str):
     thumb_path = CACHE_DIR / f"thumb{videoid}.jpg"
     downloaded = False
     try:
-        async with aiohttp.ClientSession() as session:
+        connector = aiohttp.TCPConnector(ssl=False)
+        async with aiohttp.ClientSession(connector=connector) as session:
             for turl in thumb_urls:
                 try:
                     async with session.get(
                         turl,
-                        timeout=aiohttp.ClientTimeout(total=10),
-                        headers={"User-Agent": "Mozilla/5.0"}
+                        timeout=aiohttp.ClientTimeout(total=20),
+                        headers={
+                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                            "Referer": "https://www.youtube.com/",
+                        }
                     ) as resp:
                         if resp.status == 200:
                             data = await resp.read()
