@@ -34,47 +34,51 @@ async def download_song(link: str) -> str:
 
     outtmpl = os.path.join(DOWNLOAD_DIR, f"{video_id}.%(ext)s")
 
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "outtmpl": outtmpl,
-        "quiet": True,
-        "no_warnings": True,
-        "retries": 10,
-        "fragment_retries": 10,
-        "socket_timeout": 30,
-        "http_headers": {
-            "User-Agent": "com.google.android.apps.youtube.music/X.XX.XX (Linux; U; Android 13) gzip",
-            "Accept-Language": "en-US,en;q=0.9",
-        },
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["android_music"],
-            }
-        },
-    }
+    # Try multiple player clients — Railway/cloud servers need fallbacks
+    player_clients = ["android_music", "tv_embedded", "android", "web"]
 
-    def _download():
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info([link][0], download=True)
-            return ydl.prepare_filename(info)
+    for client in player_clients:
+        ydl_opts = {
+            "format": "bestaudio/best",
+            "outtmpl": outtmpl,
+            "quiet": True,
+            "no_warnings": True,
+            "retries": 5,
+            "fragment_retries": 5,
+            "socket_timeout": 30,
+            "extractor_args": {
+                "youtube": {
+                    "player_client": [client],
+                }
+            },
+        }
 
-    try:
-        loop = asyncio.get_event_loop()
-        downloaded_file = await loop.run_in_executor(None, _download)
-        if os.path.exists(downloaded_file) and os.path.getsize(downloaded_file) > 0:
-            return downloaded_file
-        return None
-    except Exception as e:
-        print(f"Error downloading audio: {e}")
-        # Clean up partial files if any
-        for ext in ["m4a", "mp3", "webm", "opus"]:
-            file_path = os.path.join(DOWNLOAD_DIR, f"{video_id}.{ext}")
-            if os.path.exists(file_path):
-                try:
-                    os.remove(file_path)
-                except:
-                    pass
-        return None
+        def _download(opts=ydl_opts):
+            with yt_dlp.YoutubeDL(opts) as ydl:
+                info = ydl.extract_info(link, download=True)
+                return ydl.prepare_filename(info)
+
+        try:
+            loop = asyncio.get_event_loop()
+            downloaded_file = await loop.run_in_executor(None, _download)
+            if downloaded_file and os.path.exists(downloaded_file) and os.path.getsize(downloaded_file) > 0:
+                print(f"[YT Download] Success with client: {client}")
+                return downloaded_file
+        except Exception as e:
+            print(f"[YT Download] Failed with client {client}: {e}")
+            # Clean up partial files
+            for ext in ["m4a", "mp3", "webm", "opus"]:
+                fp = os.path.join(DOWNLOAD_DIR, f"{video_id}.{ext}")
+                if os.path.exists(fp):
+                    try:
+                        os.remove(fp)
+                    except:
+                        pass
+            continue  # Try next client
+
+    print(f"[YT Download] All clients failed for {video_id}")
+    return None
+
 
 
 async def download_video(link: str) -> str:
