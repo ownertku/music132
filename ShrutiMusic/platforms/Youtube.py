@@ -43,12 +43,12 @@ async def download_song(link: str) -> str:
         "fragment_retries": 10,
         "socket_timeout": 30,
         "http_headers": {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "User-Agent": "com.google.android.apps.youtube.music/X.XX.XX (Linux; U; Android 13) gzip",
             "Accept-Language": "en-US,en;q=0.9",
         },
         "extractor_args": {
             "youtube": {
-                "player_client": ["ios"],
+                "player_client": ["android_music"],
             }
         },
     }
@@ -88,7 +88,7 @@ async def download_video(link: str) -> str:
         return file_path
 
     ydl_opts = {
-        "format": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
+        "format": "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
         "outtmpl": os.path.join(DOWNLOAD_DIR, f"{video_id}.%(ext)s"),
         "merge_output_format": "mp4",
         "quiet": True,
@@ -97,12 +97,12 @@ async def download_video(link: str) -> str:
         "fragment_retries": 10,
         "socket_timeout": 30,
         "http_headers": {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "User-Agent": "com.google.android.apps.youtube.music/X.XX.XX (Linux; U; Android 13) gzip",
             "Accept-Language": "en-US,en;q=0.9",
         },
         "extractor_args": {
             "youtube": {
-                "player_client": ["ios"],
+                "player_client": ["android_music"],
             }
         },
     }
