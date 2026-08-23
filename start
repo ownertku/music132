@@ -1,14 +1,42 @@
+#!/bin/bash
 pip3 install -q pytubefix
 pip3 install -q -U yt-dlp
-python3 -c "
-import os, base64
-# Write cookies.txt to /tmp for yt-dlp
-cookies = open('/app/cookies.txt').read() if os.path.exists('/app/cookies.txt') else ''
-if cookies:
-    with open('/tmp/yt_cookies.txt', 'w') as f:
-        f.write(cookies)
-    print('[Start] YouTube cookies loaded from /app/cookies.txt')
-else:
-    print('[Start] No cookies.txt found')
-"
+
+# Write YouTube cookies directly to /tmp
+cat > /tmp/yt_cookies.txt << 'COOKIESEOF'
+# Netscape HTTP Cookie File
+# https://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file! Do not edit.
+
+.youtube.com	TRUE	/	TRUE	1792018457	__Secure-BUCKET	CEE
+.youtube.com	TRUE	/	TRUE	1818228943	LOGIN_INFO	AFmmF2swRAIgaTKNMagDRRHY1VGcA8MhdopKZ-fHqNxuQtspV3uRpPICIGYrzDFKLa_JeQMG_-jhFe5Rt4iZpCtifaaRX8Yr3lPA:QUQ3MjNmemVoSFljTTU5TmRuNXlaeWFHalpmVWhPRzRSYkUxaHNsQmNndmpRQlVfdUVtekJ3ZG5aYzhSNThXMXczNnF1b3VTN2ZUdkNINVpUX2FkeklES2p5dnkxR1BPMnRCNGN3QWxhdzRSUmNHU1cyQzdDWk1DZkpuU3lEcFU4RENocG1lWk9RQlYwam9hZDR2TWNEOUNDbmZJTUw4Q0lR
+.youtube.com	TRUE	/	TRUE	1818088616	__Secure-YENID	16.YTE=pohonyFDWOmPOpBrEomcPjRho8GMLa121Z83A8JhAYXaSspOVhNEjgyFtF-JK68XUPS06DlFd2_HcTEOw8yxt7sM6xqcl46c5vd-9RCfcOYb8MQuR6_iXJCAuGasdHok6rHUInGPSNJZPhemr-GaR1neGfJBzcg8j1kFrLMpJQu5HybYy4JG5Ep8xwo2dLeBNPFwBJmlPaSDyr_XJeIoeeL-a6xPEoQvVUuSMWFNYDgb_ucJXy7sz58bA4T4I1UpjGGAcHmMfPXrciIIsY7Q2ovTQfXHsq7tsy3KxriG3EaYIEZeACfZyno45ZEKTubAtSvQu5F9wErbLEmg33USOg
+.youtube.com	TRUE	/	TRUE	1822041878	PREF	f6=40000000&tz=Asia.Calcutta&f7=100&f5=30000&f4=10000
+www.youtube.com	FALSE	/	FALSE	1822034493	ext_name	ojplmecpdpgccookcobabopnaifgidhf
+.youtube.com	TRUE	/	FALSE	1821804430	SID	g.a000BgnhOqTX0ZRs9quPii0b7PLeWuucMF2V2USjxig7zwB9OW-aX0XcKpabJV6mgaMmhl0YZAACgYKAYUSARUSFQHGX2MiXW_2eDTAOsDSVUbhTXRHKxoVAUF8yKpk2SDTB6zgAHKmDXIx5Hal0076
+.youtube.com	TRUE	/	TRUE	1821804430	__Secure-1PSID	g.a000BgnhOqTX0ZRs9quPii0b7PLeWuucMF2V2USjxig7zwB9OW-a0e5NC7g-1ptfKbIgWhqiVwACgYKAa4SARUSFQHGX2MipA28iMfUYfoFvj8HIZkp4xoVAUF8yKpQN_jo6mZcUNoT0MbIhgif0076
+.youtube.com	TRUE	/	TRUE	1821804430	__Secure-3PSID	g.a000BgnhOqTX0ZRs9quPii0b7PLeWuucMF2V2USjxig7zwB9OW-alpMEPB_gOWHss3v1W46rIwACgYKAZwSARUSFQHGX2MiqQppJLn04wEqhM89leGbcBoVAUF8yKq--R9-GS_FtpTPCuVuEdlf0076
+.youtube.com	TRUE	/	FALSE	1821804430	HSID	ACwRvp55FB6tbS7fF
+.youtube.com	TRUE	/	TRUE	1821804430	SSID	AcP_b1WbHDwVeRY9C
+.youtube.com	TRUE	/	FALSE	1821804430	APISID	iQ0dqzHQbiYuFxAJ/AEtj3SiqiYliwN90T
+.youtube.com	TRUE	/	TRUE	1821804430	SAPISID	igdbiwwHY6CMF67Q/A2afIdLVmiv-ELoVJ
+.youtube.com	TRUE	/	TRUE	1821804430	__Secure-1PAPISID	igdbiwwHY6CMF67Q/A2afIdLVmiv-ELoVJ
+.youtube.com	TRUE	/	TRUE	1821804430	__Secure-3PAPISID	igdbiwwHY6CMF67Q/A2afIdLVmiv-ELoVJ
+.youtube.com	TRUE	/	TRUE	1819017906	__Secure-1PSIDTS	sidts-CjUBXMw41VgyuI1kJTmAb07_1H1asP27uhOWiYLivWwjA4uCI8RUGwRhSIozKg4puOZZGVjexhAA
+.youtube.com	TRUE	/	TRUE	1819017906	__Secure-3PSIDTS	sidts-CjUBXMw41VgyuI1kJTmAb07_1H1asP27uhOWiYLivWwjA4uCI8RUGwRhSIozKg4puOZZGVjexhAA
+.youtube.com	TRUE	/	FALSE	1819017906	SIDCC	AKEyXzXMU33vRvrnVlztizT1afbEXZ9R_bO3vfzEYoT-pKvlBdeeETwem24svO33Z45BaBBzfw
+.youtube.com	TRUE	/	TRUE	1819017906	__Secure-1PSIDCC	AKEyXzU2SXoLNIQ0Ybr0Tu7EW-dxwGndQ3V7hB9e685_Cg9P-bk9lRWMtuLE4BRlLQOSa3KQQQ
+.youtube.com	TRUE	/	TRUE	1819017906	__Secure-3PSIDCC	AKEyXzWCoy91ViDeEMmRX4YcJ2uhBxKzRJmGhSTglFIgR3pjLqQn4lbi2bsif_3cWhVDhrzZ3g
+.youtube.com	TRUE	/	TRUE	1795967768	VISITOR_INFO1_LIVE	pD8btwOOWp0
+.youtube.com	TRUE	/	TRUE	1795967768	VISITOR_PRIVACY_METADATA	CgJJThIEGgAgYQ%3D%3D
+.youtube.com	TRUE	/	TRUE	1798983752	__Secure-YNID	19.YT=m48LZtDV4dBuHOT0ggduCRgBuEVkXIksJanufuPX940NpwZpKiHiP79d1Ezar1eKpm6nEOWarN4e-dUY27daEhA39cmBMcyLb4H5x8GZCTGj9wQ-dey4vq8NSUfPOzhbJGSE-ns02M8ixSQOvplt1Mj1isuHs9vPCqxgWkWTZ_nR677F3alhdDat61e7ofqGLAjj7CC3HjLd5U-zomzbzBdHzSyAWLYSW6yXEEypp_dkJoFGSsVziZKIpxzxZ9cOgOX69dP9fVQ2HHmIaEWLIyRGwUJHfBtuL1I0_Md9hF8EoqbunNfBd5fDJkves0BJqCgc-yXJUwJVcoMLk1K-jA
+.youtube.com	TRUE	/	TRUE	1798983752	__Secure-ROLLOUT_TOKEN	CJDRzty8wNqN_QEQpciQy_XolAMYheiXgdnAlQM%3D
+.youtube.com	TRUE	/	TRUE	1803026497	VISITOR_INFO1_LIVE	SPHMkYNyFuM
+.youtube.com	TRUE	/	TRUE	1803026497	VISITOR_PRIVACY_METADATA	CgJJThIEGgAgPw%3D%3D
+.youtube.com	TRUE	/	TRUE	1802974521	__Secure-YNID	21.YT=jAopa4pNA1ECnJ_JFrsGfiP_999kSrhUjDyfbYD5c9vRhRCpD6CPQP41Luz-b3KyqnIzzDaPCjXo8cTuX-hFFDaz8GtpSzDtzw13Z0mgTSdx6vwUYYlbSNkdFRKC3DGntuiQesYwhd3E3UaCMWA5CWan_yDC2dL-LaP6d-njiTWniK1wLHv5P2wGKPIKQ7iRgUq_xnso80CdWnfiQOlQNLw2s6xRlrc6h9TjPph9NJW6gcjZVfV0n1aU6siKHuNio0LUvOjWS2uGc-OJBSfzJyW5-nKlxxe-FuDA-Q53OlRcTVbptkx_wc_K3D-oxr3Ih68iIX_19jvIOICi3IaUfQ
+.youtube.com	TRUE	/	TRUE	1802974521	__Secure-ROLLOUT_TOKEN	CLeUjdKkyJzYFRCV_evZ1fSTAxjS4dnj67SWAw%3D%3D
+.youtube.com	TRUE	/	TRUE	0	YSC	zmuiGlSpfVY
+COOKIESEOF
+
+echo "[Start] YouTube cookies written to /tmp/yt_cookies.txt"
 python3 -m ShrutiMusic
