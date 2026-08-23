@@ -88,7 +88,7 @@ async def download_video(link: str) -> str:
         return file_path
 
     ydl_opts = {
-        "format": "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
+        "format": "bestvideo[height<=1440]+bestaudio/best[height<=1440]/best",
         "outtmpl": os.path.join(DOWNLOAD_DIR, f"{video_id}.%(ext)s"),
         "merge_output_format": "mp4",
         "quiet": True,
