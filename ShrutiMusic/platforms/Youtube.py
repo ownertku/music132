@@ -14,6 +14,9 @@ import aiohttp
 DOWNLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "downloads")
 DOWNLOAD_DIR = os.path.abspath(DOWNLOAD_DIR)
 
+COOKIES_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "cookies.txt")
+COOKIES_FILE = os.path.abspath(COOKIES_FILE) if os.path.exists(os.path.abspath(COOKIES_FILE)) else None
+
 
 def time_to_seconds(time):
     stringt = str(time)
@@ -52,6 +55,8 @@ async def download_song(link: str) -> str:
                 }
             },
         }
+        if COOKIES_FILE:
+            ydl_opts["cookiefile"] = COOKIES_FILE
 
         def _download(opts=ydl_opts):
             with yt_dlp.YoutubeDL(opts) as ydl:
